@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { element } from "prop-types";
+import { Button, FormGroup, Label, Input } from "reactstrap";
+import memberObject from "../../memberObject";
 
 interface Props {}
 
 const Form = (props: Props) => {
-	class memberObject {
-		constructor() {
-			this.id = Math.floor(Math.random() * 1000);
-			this.name = "";
-			this.email = "";
-			this.role = "frontend";
-		}
-	}
-
 	const [member, setMember] = useState(new memberObject());
 
 	useEffect(() => {
@@ -26,16 +19,22 @@ const Form = (props: Props) => {
 
 		if (JSON.stringify(props.editThisOne) === "{}") {
 			// Adding a new one
-			if (/[^@]+@[^\.]+\..+/.test(member.email)) {
-				props.setMembers([...props.members, member]);
-				setMember(new memberObject());
-				console.log(e);
-				// e.target.name.value = "";
-				// e.target.email.value = "";
-				// e.target.name.value = "";
+			if (/^[a-zA-Z]+$/.test(member.name)) {
+				if (/[^@]+@[^\.]+\..+/.test(member.email)) {
+					props.setMembers([...props.members, member]);
+					setMember(new memberObject());
+					console.log(e);
+					// e.target.name.value = "";
+					// e.target.email.value = "";
+					// e.target.name.value = "";
 
-				// console.log(e.target[0]);
-				// console.log(e.target[1]);
+					// console.log(e.target[0]);
+					// console.log(e.target[1]);
+				} else {
+					alert("Invalid email");
+				}
+			} else {
+				alert("Invalid name. No numbers!");
 			}
 		} else {
 			// Editing an existing one
@@ -73,39 +72,50 @@ const Form = (props: Props) => {
 
 	return (
 		<form onSubmit={addNewMember}>
-			{/* {JSON.stringify(props.editThisOne)} */}
-			<label htmlFor="name">Name: </label>
-			<input
-				type="text"
-				name="name"
-				onChange={memberFormChange}
-				value={member.name}
-				required
-			/>
-			<br />
-			<label htmlFor="email">Email: </label>
-			<input
-				type="email"
-				name="email"
-				onChange={memberFormChange}
-				value={member.email}
-				required
-			/>
-			<br />
-			<label htmlFor="role">Role: </label>
+			<FormGroup>
+				{/* {JSON.stringify(props.editThisOne)} */}
+				<Label htmlFor="name">Name: </Label>
+				<Input
+					type="text"
+					name="name"
+					onChange={memberFormChange}
+					value={member.name}
+					required
+				/>
+			</FormGroup>
+			<FormGroup>
+				<Label htmlFor="email">Email: </Label>
+				<Input
+					type="email"
+					name="email"
+					onChange={memberFormChange}
+					value={member.email}
+					required
+				/>
+			</FormGroup>
+			<FormGroup>
+				<Label htmlFor="role">Role: </Label>
 
-			<select name="role" onChange={memberFormChange} value={member.role}>
-				<option value="backend">backend engineer</option>
-				<option value="frontend">frontend engineer</option>
-				<option value="designer">designer</option>
-			</select>
-			<br />
-			<br />
+				<Input
+					type="select"
+					name="role"
+					onChange={memberFormChange}
+					value={member.role}
+				>
+					<option value="backend">backend engineer</option>
+					<option value="frontend">frontend engineer</option>
+					<option value="designer">designer</option>
+				</Input>
+			</FormGroup>
 			{JSON.stringify(props.editThisOne) === "{}" && (
-				<input type="submit" value="Add" />
+				<Button type="submit" value="Add" color="success">
+					Add Member
+				</Button>
 			)}
 			{JSON.stringify(props.editThisOne) !== "{}" && (
-				<input type="submit" value="Save" />
+				<Button type="submit" value="Save" color="success">
+					Save Member
+				</Button>
 			)}
 		</form>
 	);

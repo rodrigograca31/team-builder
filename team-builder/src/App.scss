@@ -4,7 +4,8 @@ body {
 }
 
 .App {
-	text-align: center;
+	// text-align: center;
+	margin-top: 15px;
 }
 
 .members {
@@ -14,10 +15,19 @@ body {
 		padding: 20px;
 	}
 	p:nth-child(odd) {
-		background: rgba(255, 255, 255, 0.4);
+		background: rgba(255, 255, 255, 0.1);
 	}
 	.edit {
 		background: none;
 		cursor: pointer;
 	}
+	.member {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+}
+
+hr {
+	border: 1px solid;
 }
